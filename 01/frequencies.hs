@@ -1,4 +1,5 @@
 import System.IO
+import qualified Data.Set as Set
 
 main = withFile "input.txt" ReadMode $ \handle -> do
     ints <- map readSignedInt . words <$> hGetContents handle
@@ -8,7 +9,7 @@ main = withFile "input.txt" ReadMode $ \handle -> do
     print endFreq
 
     -- part two
-    let firstDup = findFirstDupFreq [0] (cycle ints)
+    let firstDup = findFirstDupFreq (cycle ints)
     print firstDup
 
 
@@ -17,11 +18,16 @@ readSignedInt ('+':numberStr) = read numberStr
 readSignedInt numberStr = read numberStr
 
 
-findFirstDupFreq :: [Int] -> [Int] -> Int
-findFirstDupFreq acc (x:xs) =
-    let lastSum = head acc
-        currentSum = x + lastSum
-    in
-    if currentSum `elem` acc
-        then currentSum
-        else findFirstDupFreq (currentSum:acc) xs
+findFirstDupFreq :: [Int] -> Int
+findFirstDupFreq ints =
+    f 0 (Set.singleton 0) ints
+
+    where
+    f :: Int -> Set.Set Int -> [Int] -> Int
+    f lastSum sums (x:xs) =
+        let currentSum = x + lastSum
+
+        in
+        if Set.member currentSum sums
+            then currentSum
+            else f currentSum (Set.insert currentSum sums) xs
