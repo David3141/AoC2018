@@ -12,7 +12,7 @@ main = withFile "input.txt" ReadMode $ \handle -> do
     -- part two
     let similarIds = findSimilarIds ids
     putStrLn "The two similar IDs are: "
-    print $ similarIds
+    print similarIds
 
     putStrLn "Omitting the one unqequal letter leaves us with:"
     print $ omitUnequalChars similarIds
@@ -51,7 +51,7 @@ omitUnequalChars (text1, text2) = omitUnequal (text1, text2) ""
         omitUnequal ("", _) result = result
         omitUnequal (_, "") result = result
         omitUnequal (x:xs, y:ys) result =
-            omitUnequal (xs, ys) (if x == y then (result ++ [x]) else result)
+            omitUnequal (xs, ys) (if x == y then result ++ [x] else result)
 
 
 findSimilarIds :: [String] -> (String, String)

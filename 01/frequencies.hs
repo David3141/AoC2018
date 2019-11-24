@@ -5,7 +5,7 @@ main = withFile "input.txt" ReadMode $ \handle -> do
     ints <- map readSignedInt . words <$> hGetContents handle
 
     -- part one
-    let endFreq = foldl (+) 0 ints
+    let endFreq = sum ints
     print endFreq
 
     -- part two
@@ -19,8 +19,8 @@ readSignedInt numberStr = read numberStr
 
 
 findFirstDupFreq :: [Int] -> Int
-findFirstDupFreq ints =
-    f 0 (Set.singleton 0) ints
+findFirstDupFreq =
+    f 0 (Set.singleton 0)
 
     where
     f :: Int -> Set.Set Int -> [Int] -> Int
