@@ -34,10 +34,8 @@ checksum ids =
         containsExactly2 * containsExactly3
 
 
-numOfDifferingChars :: String -> String -> Int -> Int
-numOfDifferingChars _ "" nDiffering = nDiffering
-numOfDifferingChars "" _ nDiffering = nDiffering
-numOfDifferingChars text1 text2 nDiffering = countDiffering text1 text2 0
+numOfDifferingChars :: String -> String -> Int
+numOfDifferingChars text1 text2 = countDiffering text1 text2 0
     where
         countDiffering _ "" nDiffering = nDiffering
         countDiffering "" _ nDiffering = nDiffering
@@ -59,5 +57,5 @@ findSimilarIds ids = head
     [ (ids!!x, ids!!y)
     | x <- [0 .. length ids - 1]
     , y <- [x .. length ids - 1]
-    , numOfDifferingChars (ids!!x) (ids!!y) 0 == 1
+    , numOfDifferingChars (ids!!x) (ids!!y) == 1
     ]
